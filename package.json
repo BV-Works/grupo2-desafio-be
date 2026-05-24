@@ -5,9 +5,7 @@
     "main": "src/server.js",
     "type": "module",
     "scripts": {
-        "dev": "docker-compose up -d && node server.js",
-        "dev:full": "docker-compose up -d && node seed.js && node server.js",
-        "seed": "node seed.js",
+        "dev": "node --watch src/server.js",
         "db:up": "docker-compose up -d",
         "db:down": "docker-compose down",
         "format": "prettier --write ."

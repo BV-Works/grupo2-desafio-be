@@ -4,11 +4,11 @@ import { authMiddleware } from '../middlewares/auth.middleware.js';
 import { loginLimiter } from '../middlewares/rateLimit.middleware.js';
 const router = express.Router();
 
-// POST http://localhost:3000/api/auth/login
+// POST /api/auth/login
 router.post('/login', loginLimiter, login);
-// GET http://localhost:3000/api/auth/me
+// GET /api/auth/me
 router.get('/me', authMiddleware, getMe);
-// POST http://localhost:3000/api/auth/logout
+// POST /api/auth/logout
 router.post('/logout', logout);
 
 export default router;
