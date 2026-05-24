@@ -1,9 +1,9 @@
-import { DataTypes } from "sequelize"; // Tipos de datos como DataTypes.STRING...
-import sequelize from "../config/db.js"; // Importamos la conexion
+import { DataTypes } from 'sequelize'; // Tipos de datos como DataTypes.STRING...
+import sequelize from '../config/db.js'; // Importamos la conexion
 
 // sequelize.define -> crea un modelo de Sequelize
 const User = sequelize.define(
-    "User",
+    'User',
     {
         id: {
             type: DataTypes.UUID, // generara un codigo unico y seguro para api
@@ -32,7 +32,7 @@ const User = sequelize.define(
     },
 
     {
-        tableName: "users",
+        tableName: 'users',
         timestamps: true,
     }
 );
