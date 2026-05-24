@@ -1,10 +1,10 @@
-import express from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
 
 // ROUTES
-import authRoutes from "./routes/auth.routes.js";
+import authRoutes from './routes/auth.routes.js';
 
 dotenv.config();
 
@@ -17,13 +17,13 @@ app.use(
     })
 );
 
-app.use(express.json());// Si llega un body en formato JSON, conviértelo a objeto JavaScript
+app.use(express.json()); // Si llega un body en formato JSON, conviértelo a objeto JavaScript
 app.use(cookieParser()); // Le dice a Express, cuando lleguen cookies, léelas y mételas dentro de req.cookies
 
-app.use("/api/auth", authRoutes);
+app.use('/api/auth', authRoutes);
 
-app.get("/api/health", (req, res) => {
-    res.json({ message: "Backend funcionando correctamente" });
+app.get('/api/health', (req, res) => {
+    res.json({ message: 'Backend funcionando correctamente' });
 });
 
 export default app;
