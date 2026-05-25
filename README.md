@@ -100,7 +100,7 @@ Arranque del servidor Express
 
 # 📡 7. Endpoints disponibles
 
-Health check:
+## 🔥 Health check:
 GET /api/health
 Respuesta:
 {
@@ -148,6 +148,49 @@ riskLevel=medium
 riskLevel=high
 
 Ejemplo: /api/clients?riskLevel=high
+
+## 📡 Transactions: Transacciones
+GET /api/transactions
+
+Este endpoint devuelve una lista de transacciones enriquecidas con su predicción de fraude asociada (Prediction), incluyendo un risk_score calculado en backend.
+
+### 🧠 QUÉ HACE
+Cada transacción incluye:
+
+Datos financieros y operativos (Transaction)
+Resultado del modelo de fraude (Prediction)
+Score de riesgo calculado (0–100)
+
+### ⚙️ QUERY PARAMS DISPONIBLES
+📄 1. PAGINACIÓN
+page → número de página (default: 1)
+limit → elementos por página (default: 10)
+
+Ejemplo: /api/transactions?page=2&limit=10
+
+🎯 2. FILTROS:
+🔹 target_final (revisado por analista):
+
+target_final=true
+target_final=false
+
+Ejemplo: /api/transactions?target_final=false
+
+🔹 riskLevel (nivel de riesgo calculado):
+
+Basado en prob_fraud * 100
+
+riskLevel=high     // > 70
+riskLevel=medium   // 30 - 70
+riskLevel=low      // < 30
+
+Ejemplo: /api/transactions?riskLevel=high
+
+🔹 sort:
+sort=prob_fraud_desc
+sort=prob_fraud_asc
+
+Ejemplo: /api/transactions?sort=prob_fraud_desc
 
 ---
 
