@@ -150,6 +150,8 @@ riskLevel=high
 Ejemplo: /api/clients?riskLevel=high
 
 ## 📡 Transactions: Transacciones
+
+🔍 GET Transactions
 GET /api/transactions
 
 Este endpoint devuelve una lista de transacciones enriquecidas con su predicción de fraude asociada (Prediction), incluyendo un risk_score calculado en backend.
@@ -191,6 +193,63 @@ sort=prob_fraud_desc
 sort=prob_fraud_asc
 
 Ejemplo: /api/transactions?sort=prob_fraud_desc
+
+🔍 GET Transaction by ID
+
+GET /api/transactions/:id
+
+Este endpoint devuelve el detalle completo de una transacción concreta junto con su predicción de fraude asociada y el risk_score calculado.
+
+### 🧠 QUÉ HACE
+
+Devuelve:
+
+Datos completos de la transacción (Transaction)
+Predicción del modelo asociada (Prediction)
+risk_score calculado en backend (prob_fraud * 100)
+
+### 📌 PARÁMETROS
+id	string	ID de la transacción
+
+EJEMPLO: GET /api/transactions/trx-001
+
+
+✏️ PUT Transaction by ID (Review analista)
+PUT /api/transactions/:id
+
+Este endpoint permite que un analista revise una transacción y registre su decisión final sobre si es fraude o no.
+
+### 🧠 QUÉ HACE
+
+Actualiza:
+
+target_final → decisión del analista
+fecha_revision → timestamp automático de la revisión
+id_usuario → analista que realiza la revisión
+
+📦 BODY REQUEST
+{
+  "target_final": true,
+  "id_usuario": "analyst-001"
+}
+📦 RESPUESTA
+{
+  "message": "Transaction updated successfully",
+  "data": {
+    "id_transaccion": "trx-001",
+    "target_final": true,
+    "fecha_revision": "2026-05-25T20:00:00.000Z",
+    "id_usuario": "analyst-001"
+  }
+}
+
+###  📌 PARÁMETROS
+id	string	ID de la transacción
+
+### ⚠️ NOTAS
+Si target_final no se envía, no se modifica
+fecha_revision se asigna automáticamente en backend
+Este endpoint es clave para feedback del modelo ML
 
 ---
 

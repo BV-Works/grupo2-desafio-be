@@ -1,4 +1,4 @@
-import { getTransactionsService } from '../services/transactions.service.js';
+import { getTransactionsService, getTransactionByIdService, updateTransactionByIdService } from '../services/transactions.service.js';
 
 export const getTransactions = async (req, res) => {
     try {
@@ -29,4 +29,34 @@ export const getTransactions = async (req, res) => {
             message: 'Error fetching transactions'
         });
     }
+};
+
+
+export const getTransactionByIdController = async (req, res) => {
+    const { id } = req.params;
+
+    const data = await getTransactionByIdService(id);
+
+    if (!data) {
+        return res.status(404).json({ message: 'Transaction not found' });
+    }
+
+    res.json(data);
+};
+
+
+export const updateTransactionByIdController = async (req, res) => {
+    const { id } = req.params;
+    const { target_final, id_usuario } = req.body;
+
+    const updated = await updateTransactionByIdService(id, {
+        target_final,
+        id_usuario
+    });
+
+    if (!updated) {
+        return res.status(404).json({ message: 'Transaction not found' });
+    }
+
+    res.json(updated);
 };

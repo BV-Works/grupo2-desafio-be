@@ -127,3 +127,84 @@ export const getTransactionsService = async ({ page, limit, target_final, riskLe
         data: paginated,
     };
 };
+
+export const getTransactionByIdService = async (id) => {
+    const transaction = await Transaction.findOne({
+        where: { id_transaccion: id },
+        attributes: [
+            'id_transaccion',
+            'id_cliente',
+            'id_cuenta',
+            'cuenta_origen',
+            'estado_cuenta',
+            'saldo_actual',
+            'saldo_medio_30_dias',
+            'volumen_entrante_30_dias',
+            'volumen_saliente_30_dias',
+            'numero_transferencias_recibidas_7_dias',
+            'numero_transferencias_enviadas_7_dias',
+            'id_tarjeta',
+            'estado_tarjeta',
+            'fecha_creacion_tarjeta',
+            'antiguedad_tarjeta_dias',
+            'limite_importe_transacciones',
+            'veces_superar_limite_7_dias',
+            'tipo_transaccion',
+            'fecha_hora',
+            'is_night',
+            'is_weekend',
+            'tiempo_desde_ultima_transaccion',
+            'numero_transacciones_ultima_hora',
+            'importe_transaccion',
+            'metodo_autenticacion',
+            'numero_pin_disponibles',
+            'identificador_dispositivo_fingerprint',
+            'dispositivo_reconocido',
+            'operacion_pais',
+            'operacion_region',
+            'direccion_ip_origen',
+            'geolocalizacion',
+            'cuenta_destino',
+            'destino_alto_riesgo',
+            'target_final',
+            'fecha_revision',
+            'id_usuario'
+        ]
+    });
+
+    if (!transaction) return null;
+
+    const prediction = await Prediction.findOne({
+        where: { id_transaccion: id }
+    });
+
+    const risk_score = prediction ? prediction.prob_fraud * 100 : 0;
+
+    return {
+        ...transaction.toJSON(),
+        prediction: prediction ? prediction.toJSON() : null,
+        risk_score
+    };
+};
+
+
+export const updateTransactionByIdService = async (id, { target_final, id_usuario }) => {
+    const transaction = await Transaction.findOne({
+        where: { id_transaccion: id }
+    });
+
+    if (!transaction) return null;
+
+    const parsedTarget =
+        target_final === undefined
+            ? transaction.target_final
+            : target_final === 'true' || target_final === true;
+
+    await transaction.update({
+        target_final: parsedTarget,
+        fecha_revision: new Date(),
+        id_usuario
+    });
+
+    return transaction;
+};
