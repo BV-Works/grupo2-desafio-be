@@ -169,7 +169,7 @@ export const runSeed = async () => {
             target_final: parseBoolean(t.target_final),
 
             id_usuario: t.id_usuario === '' ? null : t.id_usuario,
-            
+
             fecha_creacion_tarjeta: parseDate(t.fecha_creacion_tarjeta),
             fecha_hora: parseDate(t.fecha_hora),
             fecha_revision: parseDate(t.fecha_revision),

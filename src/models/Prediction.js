@@ -1,8 +1,8 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/db.js';
 
 const Prediction = sequelize.define(
-    "Prediction",
+    'Prediction',
     {
         id_transaccion: {
             type: DataTypes.STRING,
@@ -48,7 +48,7 @@ const Prediction = sequelize.define(
         },
     },
     {
-        tableName: "predictions",
+        tableName: 'predictions',
         timestamps: true,
     }
 );

@@ -119,6 +119,7 @@ GET /api/clients
 Este endpoint te devuelve una lista de clientes agregados desde transactions, con métricas de comportamiento y riesgo.
 
 ### 🧠 QUÉ HACE
+
 Agrupa transactions por id_cliente
 Calcula métricas promedio:
 gasto medio
@@ -127,7 +128,9 @@ actividad
 fraudes históricos
 Genera un risk_score
 Permite filtros + paginación
+
 ### ⚙️ QUERY PARAMS DISPONIBLES
+
 📄 1. PAGINACIÓN
 page=1
 limit=20
