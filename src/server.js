@@ -1,11 +1,9 @@
 import app from './app.js';
-import dotenv from 'dotenv';
 import sequelize from './config/db.js';
 
 import './models/index.js';
 import { runSeed } from './seed.js';
 
-dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
@@ -24,7 +22,7 @@ const startServer = async () => {
 
         // START SERVER
         app.listen(PORT, () => {
-            console.log(`🚀 Servidor en http://localhost:${PORT}`);
+            console.log(`🚀 Servidor en http://localhost:${PORT}/api/health`);
         });
     } catch (error) {
         console.error('❌ Error al iniciar servidor:', error);

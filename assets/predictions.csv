@@ -1,0 +1,11 @@
+﻿id_transaccion;is_fraud;prob_fraud;impacto_fraude;es_transfronteriza;ratio_imp_limite;intensidad_tx;severidad_tx;flujo_neto_30d;mensaje;;;;;;;;;;;;;;;;;;
+trx-001;false;0.12;false;false;0.07;0.0003;120;200;Transaccion legitima - probabilidad fraude 12%;;;;;;;;;;;;;;;;;;
+trx-002;true;0.91;true;true;0.64;0.0450;890;2500;Alto riesgo de fraude detectado;;;;;;;;;;;;;;;;;;
+trx-003;true;0.83;true;true;0.95;0.0870;950;1200;Operacion sospechosa fuera de patron habitual;;;;;;;;;;;;;;;;;;
+trx-004;false;0.18;false;false;0.06;0.0008;140;300;Transaccion legitima;;;;;;;;;;;;;;;;;;
+trx-005;true;0.97;true;true;0.81;0.0920;1200;5800;Fraude potencial critico;;;;;;;;;;;;;;;;;;
+trx-006;false;0.05;false;false;0.09;0.0001;60;90;Actividad normal;;;;;;;;;;;;;;;;;;
+trx-007;true;0.76;true;true;0.72;0.0310;730;2100;Tarjeta bloqueada utilizada;;;;;;;;;;;;;;;;;;
+trx-008;false;0.21;false;false;0.30;0.0015;190;400;Comportamiento dentro del rango esperado;;;;;;;;;;;;;;;;;;
+trx-009;false;0.14;false;false;0.18;0.0007;110;180;Bajo riesgo;;;;;;;;;;;;;;;;;;
+trx-010;true;0.99;true;true;0.93;0.1100;1500;9200;Fraude extremadamente probable;;;;;;;;;;;;;;;;;;

@@ -107,9 +107,44 @@ Respuesta:
 "message": "Backend funcionando correctamente"
 }
 
-Auth:
+## 🚀 Auth: Autenticación
+
 POST /api/auth/login
 POST /api/auth/register
+
+## 📡Clients: Clientes
+
+GET /api/clients
+
+Este endpoint te devuelve una lista de clientes agregados desde transactions, con métricas de comportamiento y riesgo.
+
+### 🧠 QUÉ HACE
+Agrupa transactions por id_cliente
+Calcula métricas promedio:
+gasto medio
+volatilidad
+actividad
+fraudes históricos
+Genera un risk_score
+Permite filtros + paginación
+### ⚙️ QUERY PARAMS DISPONIBLES
+📄 1. PAGINACIÓN
+page=1
+limit=20
+
+Ejemplo: /api/clients?page=1&limit=10
+
+🌍 2. FILTROS GEOGRÁFICOS
+country=ES
+region=Centro
+
+Ejemplo: /api/clients?country=ES&region=Norte
+🚨 3. FILTRO DE RIESGO
+riskLevel=low
+riskLevel=medium
+riskLevel=high
+
+Ejemplo: /api/clients?riskLevel=high
 
 ---
 
@@ -120,12 +155,12 @@ El seed se ejecuta automáticamente al iniciar el servidor si en .env RUN_SEED=t
 Incluye:
 
 Usuario admin inicial
-Carga de customers desde CSV
+Carga de predictions desde CSV
 Carga de transactions desde CSV
 
 📁 Archivos CSV:
 
-/assets/customers.csv
+/assets/predictions.csv
 /assets/transactions.csv
 
 ---
