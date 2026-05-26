@@ -1,22 +1,11 @@
-id_transaction;cuenta_envio_id;is_night;is_weekend;is_fraud;target_final;estado_revision;id_usuario;fecha_revision
-1;1;true;false;false;;;;
-2;2;false;true;true;;;;
-3;3;true;true;false;;;;
-4;4;false;false;false;;;;
-5;5;true;false;true;;;;
-6;6;false;true;false;;;;
-7;7;true;true;true;;;;
-8;8;false;false;false;;;;
-9;9;true;false;false;;;;
-10;10;false;true;true;;;;
-11;11;true;false;false;;;;
-12;12;false;false;false;;;;
-13;13;true;true;true;;;;
-14;14;false;true;false;;;;
-15;15;true;false;false;;;;
-16;3;true;false;true;;;;
-17;7;false;true;false;;;;
-18;2;true;true;true;;;;
-19;5;false;false;false;;;;
-20;9;true;true;false;;;;
-21;1;false;false;false;;;;
+﻿id_transaccion;id_cliente;tipo_cliente;edad_cliente;customer_country;customer_region;tenure;importe_medio_mensual;desviacion_estandar_mensual;media_transacciones_al_dia;numero_fraudes_ultimo_ano;id_cuenta;cuenta_origen;estado_cuenta;saldo_actual;saldo_medio_30_dias;volumen_entrante_30_dias;volumen_saliente_30_dias;numero_transferencias_recibidas_7_dias;numero_transferencias_enviadas_7_dias;id_tarjeta;estado_tarjeta;fecha_creacion_tarjeta;antiguedad_tarjeta_dias;limite_importe_transacciones;veces_superar_limite_7_dias;tipo_transaccion;fecha_hora;is_night;is_weekend;tiempo_desde_ultima_transaccion;numero_transacciones_ultima_hora;importe_transaccion;metodo_autenticacion;numero_pin_disponibles;identificador_dispositivo_fingerprint;dispositivo_reconocido;operacion_pais;operacion_region;direccion_ip_origen;geolocalizacion;cuenta_destino;destino_alto_riesgo;target_final;id_usuario;fecha_revision
+trx-001;cli-001;persona;35;ES;Centro;365;500;150;3.5;0;acc-001;ES20427866183;activa;2500;2200;3000;2800;3;2;card-001;activa;15/01/2023;365;2000;0;tarjeta;23/05/2026 14:30;false;false;3600;1;150;PIN;3;fp-001;true;ES;Centro;86.34.12.179;40.4168,-3.7038;ES169540317577;false;;;
+trx-002;cli-002;empresa;42;FR;Norte;720;1500;300;12.5;1;acc-002;FR20427866183;activa;8500;7900;12000;9500;10;8;card-002;activa;12/03/2022;800;5000;1;transferencia;24/05/2026 2:15;true;false;120;5;3200;SMS;2;fp-002;false;DE;Berlin;102.54.22.11;52.5200,13.4050;DE9988776655;true;;;
+trx-003;cli-003;persona;28;ES;Sur;180;300;80;1.2;0;acc-003;ES5544332211;bloqueada;900;1200;1400;1300;1;1;card-003;caducada;20/06/2021;1200;1000;3;retiro;24/05/2026 23:40;true;true;45;8;950;PIN;1;fp-003;true;PT;Lisboa;77.182.44.98;38.7223,-9.1393;PT4455667788;true;;;
+trx-004;cli-004;persona;51;IT;Sur;950;2200;400;6.8;2;acc-004;IT7788990011;activa;15000;14200;18500;16000;7;6;card-004;activa;10/11/2020;1600;7500;0;tarjeta;25/05/2026 11:05;false;false;5400;2;450;Biometria;3;fp-004;true;IT;Roma;45.77.12.1;41.9028,12.4964;IT1122334455;false;;;
+trx-005;cli-005;empresa;60;UK;Londres;1400;5000;950;25.4;3;acc-005;UK9988776655;activa;32000;30100;45000;42000;22;18;card-005;activa;01/09/2019;2100;12000;2;transferencia;25/05/2026 4:10;true;false;15;12;9800;Token;1;fp-005;false;RU;Moscu;188.11.54.77;55.7558,37.6173;RU9988776655;true;;;
+trx-006;cli-006;persona;24;ES;Centro;90;200;40;0.8;0;acc-006;ES1111222233;activa;600;700;900;850;1;0;card-006;activa;15/01/2025;120;500;0;bizum;25/05/2026 18:25;false;false;7200;1;45;PIN;3;fp-006;true;ES;Madrid;80.21.45.66;40.4168,-3.7038;ES3333444455;false;;;
+trx-007;cli-007;persona;39;DE;Berlin;400;850;220;4.3;1;acc-007;DE1111222233;activa;4100;3900;5300;5000;4;4;card-007;bloqueada;05/10/2022;950;2500;1;tarjeta;25/05/2026 1:45;true;false;300;4;1800;PIN;0;fp-007;false;PL;Varsovia;91.33.55.77;52.2297,21.0122;PL8899001122;true;;;
+trx-008;cli-008;empresa;47;ES;Norte;800;3100;500;14.7;0;acc-008;ES9988112233;activa;12000;11500;17000;16800;15;14;card-008;activa;01/12/2021;1300;9000;0;transferencia;25/05/2026 13:20;false;false;1800;3;2700;SMS;2;fp-008;true;ES;Bilbao;84.98.77.12;43.2630,-2.9350;ES5544778899;false;;;
+trx-009;cli-009;persona;31;PT;Lisboa;250;650;120;2.1;0;acc-009;PT0011223344;activa;1800;1750;2100;2050;2;2;card-009;activa;18/04/2024;420;1800;0;tarjeta;25/05/2026 21:15;true;false;600;2;340;PIN;2;fp-009;true;PT;Lisboa;95.44.22.18;38.7223,-9.1393;PT7766554433;false;;;
+trx-010;cli-010;empresa;55;US;Texas;1800;7800;1200;30.2;5;acc-010;US5544332211;activa;65000;62000;80000;77000;35;32;card-010;activa;10/07/2018;2500;25000;4;transferencia;25/05/2026 3:55;true;true;10;15;15000;Token;0;fp-010;false;CN;Shanghai;201.55.88.10;31.2304,121.4737;CN2233445566;true;;;

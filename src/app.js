@@ -5,8 +5,8 @@ import dotenv from 'dotenv';
 
 // ROUTES
 import authRoutes from './routes/auth.routes.js';
-
-dotenv.config();
+import clientsRoutes from './routes/clients.routes.js';
+import transactionsRoutes from './routes/transactions.routes.js';
 
 const app = express();
 
@@ -21,6 +21,8 @@ app.use(express.json()); // Si llega un body en formato JSON, conviértelo a obj
 app.use(cookieParser()); // Le dice a Express, cuando lleguen cookies, léelas y mételas dentro de req.cookies
 
 app.use('/api/auth', authRoutes);
+app.use('/api/clients', clientsRoutes);
+app.use('/api/transactions', transactionsRoutes);
 
 app.get('/api/health', (req, res) => {
     res.json({ message: 'Backend funcionando correctamente' });

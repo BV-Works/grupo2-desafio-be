@@ -1,29 +1,29 @@
-// models/index.js
-
-import Customer from './Customer.js';
 import Transaction from './Transaction.js';
+import Prediction from './Prediction.js';
 import User from './User.js';
 
-// ================= RELACIONES =================
+// TRANSACTION ↔ PREDICTION
 
-// Customer -> Transactions
-Customer.hasMany(Transaction, {
-    foreignKey: 'cuenta_envio_id',
+Transaction.hasOne(Prediction, {
+    foreignKey: 'id_transaccion',
+    sourceKey: 'id_transaccion',
 });
 
-Transaction.belongsTo(Customer, {
-    foreignKey: 'cuenta_envio_id',
+Prediction.belongsTo(Transaction, {
+    foreignKey: 'id_transaccion',
+    targetKey: 'id_transaccion',
 });
 
-// User (Analista) -> Transactions revisadas
+// USER ↔ TRANSACTION
+
 User.hasMany(Transaction, {
     foreignKey: 'id_usuario',
+    sourceKey: 'id',
 });
 
 Transaction.belongsTo(User, {
     foreignKey: 'id_usuario',
+    targetKey: 'id',
 });
 
-// ================= EXPORTS =================
-
-export { Customer, Transaction, User };
+export { Transaction, Prediction, User };
