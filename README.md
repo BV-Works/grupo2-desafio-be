@@ -101,6 +101,7 @@ Arranque del servidor Express
 # 📡 7. Endpoints disponibles
 
 ## 🔥 Health check:
+
 GET /api/health
 Respuesta:
 {
@@ -157,6 +158,7 @@ GET /api/transactions
 Este endpoint devuelve una lista de transacciones enriquecidas con su predicción de fraude asociada (Prediction), incluyendo un risk_score calculado en backend.
 
 ### 🧠 QUÉ HACE
+
 Cada transacción incluye:
 
 Datos financieros y operativos (Transaction)
@@ -164,6 +166,7 @@ Resultado del modelo de fraude (Prediction)
 Score de riesgo calculado (0–100)
 
 ### ⚙️ QUERY PARAMS DISPONIBLES
+
 📄 1. PAGINACIÓN
 page → número de página (default: 1)
 limit → elementos por página (default: 10)
@@ -180,11 +183,11 @@ Ejemplo: /api/transactions?target_final=false
 
 🔹 riskLevel (nivel de riesgo calculado):
 
-Basado en prob_fraud * 100
+Basado en prob_fraud \* 100
 
-riskLevel=high     // > 70
-riskLevel=medium   // 30 - 70
-riskLevel=low      // < 30
+riskLevel=high // > 70
+riskLevel=medium // 30 - 70
+riskLevel=low // < 30
 
 Ejemplo: /api/transactions?riskLevel=high
 
@@ -206,13 +209,13 @@ Devuelve:
 
 Datos completos de la transacción (Transaction)
 Predicción del modelo asociada (Prediction)
-risk_score calculado en backend (prob_fraud * 100)
+risk_score calculado en backend (prob_fraud \* 100)
 
 ### 📌 PARÁMETROS
-id	string	ID de la transacción
+
+id string ID de la transacción
 
 EJEMPLO: GET /api/transactions/trx-001
-
 
 ✏️ PUT Transaction by ID (Review analista)
 PUT /api/transactions/:id
@@ -229,24 +232,26 @@ id_usuario → analista que realiza la revisión
 
 📦 BODY REQUEST
 {
-  "target_final": true,
-  "id_usuario": "analyst-001"
+"target_final": true,
+"id_usuario": "analyst-001"
 }
 📦 RESPUESTA
 {
-  "message": "Transaction updated successfully",
-  "data": {
-    "id_transaccion": "trx-001",
-    "target_final": true,
-    "fecha_revision": "2026-05-25T20:00:00.000Z",
-    "id_usuario": "analyst-001"
-  }
+"message": "Transaction updated successfully",
+"data": {
+"id_transaccion": "trx-001",
+"target_final": true,
+"fecha_revision": "2026-05-25T20:00:00.000Z",
+"id_usuario": "analyst-001"
+}
 }
 
-###  📌 PARÁMETROS
-id	string	ID de la transacción
+### 📌 PARÁMETROS
+
+id string ID de la transacción
 
 ### ⚠️ NOTAS
+
 Si target_final no se envía, no se modifica
 fecha_revision se asigna automáticamente en backend
 Este endpoint es clave para feedback del modelo ML

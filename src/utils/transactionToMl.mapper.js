@@ -23,14 +23,7 @@ const formatDateTimeML = (value) => {
 };
 
 export const stripMLFields = (t) => {
-    const {
-        target_final,
-        id_usuario,
-        fecha_revision,
-        createdAt,
-        updatedAt,
-        ...clean
-    } = t;
+    const { target_final, id_usuario, fecha_revision, createdAt, updatedAt, ...clean } = t;
 
     return clean;
 };
@@ -64,7 +57,9 @@ export const formatTransactionsToML = (transactions) => {
             volumen_entrante_30_dias: Number(t.volumen_entrante_30_dias),
             volumen_saliente_30_dias: Number(t.volumen_saliente_30_dias),
 
-            numero_transferencias_recibidas_7_dias: Number(t.numero_transferencias_recibidas_7_dias),
+            numero_transferencias_recibidas_7_dias: Number(
+                t.numero_transferencias_recibidas_7_dias
+            ),
             numero_transferencias_enviadas_7_dias: Number(t.numero_transferencias_enviadas_7_dias),
 
             id_tarjeta: t.id_tarjeta,
