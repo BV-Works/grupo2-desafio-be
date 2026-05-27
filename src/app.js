@@ -12,8 +12,11 @@ const app = express();
 
 app.use(
     cors({
-        origin: process.env.FRONTEND_URL,
-        credentials: true, // Permite que el navegador envíe y reciba cookies entre frontend y backend cuando son dominios/puertos distintos
+        origin: [
+            process.env.FRONTEND_URL,
+            'http://localhost:5173',
+        ],
+        credentials: true, // Permite cookies/sesión entre FE y BE
     })
 );
 
