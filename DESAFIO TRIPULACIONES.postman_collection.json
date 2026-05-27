@@ -1,0 +1,495 @@
+{
+  "info": {
+    "_postman_id": "b66cb45b-4858-403b-ab4e-e022e95ab3cc",
+    "name": "DESAFIO TRIPULACIONES",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53237642",
+    "_collection_link": "https://go.postman.co/collection/53237642-b66cb45b-4858-403b-ab4e-e022e95ab3cc?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "AUTH",
+      "item": [
+        {
+          "name": "LOGIN (public)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"admin@test.com\",\r\n  \"password\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AUTH ME (logged)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkNTE0NWUxLTcyNzEtNGE2Yy04Njk4LWEzNWMzOWQ3ZjhmMCIsImlhdCI6MTc3OTczMjAwMCwiZXhwIjoxNzc5ODE4NDAwfQ.8hwdQsI99YK3v9R7PWTUY__MAE3b-Eel1Ks075OSwsU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/auth/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "CLIENTS",
+      "item": [
+        {
+          "name": "GET /api/clients PAGINACIÓN",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkNTE0NWUxLTcyNzEtNGE2Yy04Njk4LWEzNWMzOWQ3ZjhmMCIsImlhdCI6MTc3OTczMjAwMCwiZXhwIjoxNzc5ODE4NDAwfQ.8hwdQsI99YK3v9R7PWTUY__MAE3b-Eel1Ks075OSwsU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/clients?page=1&limit=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "clients"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/clients FILTRO GEOGRAFICO",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkNTE0NWUxLTcyNzEtNGE2Yy04Njk4LWEzNWMzOWQ3ZjhmMCIsImlhdCI6MTc3OTczMjAwMCwiZXhwIjoxNzc5ODE4NDAwfQ.8hwdQsI99YK3v9R7PWTUY__MAE3b-Eel1Ks075OSwsU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/clients?page=1&limit=10&country=ES&region=Norte",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "clients"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "country",
+                  "value": "ES"
+                },
+                {
+                  "key": "region",
+                  "value": "Norte"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/clients FILTRO DE RIESGO",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkNTE0NWUxLTcyNzEtNGE2Yy04Njk4LWEzNWMzOWQ3ZjhmMCIsImlhdCI6MTc3OTczMjAwMCwiZXhwIjoxNzc5ODE4NDAwfQ.8hwdQsI99YK3v9R7PWTUY__MAE3b-Eel1Ks075OSwsU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/clients?page=1&limit=10&riskLevel=high",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "clients"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "riskLevel",
+                  "value": "high"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "TRANSACTIONS",
+      "item": [
+        {
+          "name": "GET /api/transactions PAGINADO",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkNTE0NWUxLTcyNzEtNGE2Yy04Njk4LWEzNWMzOWQ3ZjhmMCIsImlhdCI6MTc3OTczMjAwMCwiZXhwIjoxNzc5ODE4NDAwfQ.8hwdQsI99YK3v9R7PWTUY__MAE3b-Eel1Ks075OSwsU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/transactions?page=1&limit=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "transactions"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/transactions FILTRO DE RIESGO",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkNTE0NWUxLTcyNzEtNGE2Yy04Njk4LWEzNWMzOWQ3ZjhmMCIsImlhdCI6MTc3OTczMjAwMCwiZXhwIjoxNzc5ODE4NDAwfQ.8hwdQsI99YK3v9R7PWTUY__MAE3b-Eel1Ks075OSwsU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/transactions?riskLevel=high",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "transactions"
+              ],
+              "query": [
+                {
+                  "key": "riskLevel",
+                  "value": "high"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/transactions FILTRO REVISION",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkNTE0NWUxLTcyNzEtNGE2Yy04Njk4LWEzNWMzOWQ3ZjhmMCIsImlhdCI6MTc3OTczMjAwMCwiZXhwIjoxNzc5ODE4NDAwfQ.8hwdQsI99YK3v9R7PWTUY__MAE3b-Eel1Ks075OSwsU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/transactions?target_final=false",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "transactions"
+              ],
+              "query": [
+                {
+                  "key": "target_final",
+                  "value": "false"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/transactions ORDENADAS PROB FRAUDE",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkNTE0NWUxLTcyNzEtNGE2Yy04Njk4LWEzNWMzOWQ3ZjhmMCIsImlhdCI6MTc3OTczMjAwMCwiZXhwIjoxNzc5ODE4NDAwfQ.8hwdQsI99YK3v9R7PWTUY__MAE3b-Eel1Ks075OSwsU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/transactions?sort=prob_fraud_desc",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "transactions"
+              ],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "prob_fraud_desc"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/transactions VISTA ANALISTA + COMUN",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkNTE0NWUxLTcyNzEtNGE2Yy04Njk4LWEzNWMzOWQ3ZjhmMCIsImlhdCI6MTc3OTczMjAwMCwiZXhwIjoxNzc5ODE4NDAwfQ.8hwdQsI99YK3v9R7PWTUY__MAE3b-Eel1Ks075OSwsU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/transactions?target_final=false&sort=prob_fraud_desc&page=1&limit=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "transactions"
+              ],
+              "query": [
+                {
+                  "key": "target_final",
+                  "value": "false"
+                },
+                {
+                  "key": "sort",
+                  "value": "prob_fraud_desc"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/transactions/:id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkNTE0NWUxLTcyNzEtNGE2Yy04Njk4LWEzNWMzOWQ3ZjhmMCIsImlhdCI6MTc3OTczMjAwMCwiZXhwIjoxNzc5ODE4NDAwfQ.8hwdQsI99YK3v9R7PWTUY__MAE3b-Eel1Ks075OSwsU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/transactions/trx-001",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "transactions",
+                "trx-001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /api/transactions/:id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkNTE0NWUxLTcyNzEtNGE2Yy04Njk4LWEzNWMzOWQ3ZjhmMCIsImlhdCI6MTc3OTczMjAwMCwiZXhwIjoxNzc5ODE4NDAwfQ.8hwdQsI99YK3v9R7PWTUY__MAE3b-Eel1Ks075OSwsU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"target_final\": true,\r\n  \"id_usuario\": \"cd5145e1-7271-4a6c-8698-a35c39d7f8f0\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/transactions/trx-001",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "transactions",
+                "trx-001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST TRANSACTION /api/transactions",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

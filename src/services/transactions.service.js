@@ -1,5 +1,7 @@
 import { Transaction, Prediction } from '../models/index.js';
 import { Op } from 'sequelize';
+import { getPredictionsFromML } from './ml.service.js';
+import { mapMLPredictionToDB } from '../utils/prediction.mapper.js';
 
 const parseBoolean = (value) => {
     if (value === undefined) return undefined;
@@ -207,4 +209,26 @@ export const updateTransactionByIdService = async (id, { target_final, id_usuari
     });
 
     return transaction;
+};
+
+
+export const createTransactionsWithPrediction = async (transactions) => {
+    const mlResponse = await getPredictionsFromML(transactions);
+
+    const predictions = mlResponse?.predicciones;
+
+    if (!Array.isArray(predictions)) {
+        throw new Error('ML response invalid');
+    }
+
+    const createdTransactions = await Transaction.bulkCreate(transactions);
+
+    const formattedPredictions = predictions.map(mapMLPredictionToDB);
+
+    const createdPredictions = await Prediction.bulkCreate(formattedPredictions);
+
+    return {
+        transactions: createdTransactions,
+        predictions: createdPredictions,
+    };
 };

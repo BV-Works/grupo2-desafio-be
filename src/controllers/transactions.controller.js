@@ -1,4 +1,4 @@
-import { getTransactionsService, getTransactionByIdService, updateTransactionByIdService } from '../services/transactions.service.js';
+import { getTransactionsService, getTransactionByIdService, updateTransactionByIdService, createTransactionsWithPrediction } from '../services/transactions.service.js';
 
 export const getTransactions = async (req, res) => {
     try {
@@ -59,4 +59,22 @@ export const updateTransactionByIdController = async (req, res) => {
     }
 
     res.json(updated);
+};
+
+export const createTransactions = async (req, res) => {
+    try {
+        const result = await createTransactionsWithPrediction(req.body);
+
+        return res.status(201).json({
+            message: 'Transactions processed with predictions',
+            data: result,
+        });
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+            message: 'Error processing transactions',
+            error: error.message,
+        });
+    }
 };

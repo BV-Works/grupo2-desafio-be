@@ -6,9 +6,16 @@ import { hashPassword } from './utils/bcrypt.js';
 import './models/index.js';
 
 import { Transaction, Prediction, User } from './models/index.js';
+import { getPredictionsFromML } from './services/ml.service.js';
+import { mapMLPredictionToDB } from './utils/prediction.mapper.js';
+import { formatTransactionsToML, stripMLFields } from './utils/transactionToMl.mapper.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// ENV
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 // CSV LOADER
 
@@ -37,7 +44,7 @@ const parseDate = (value) => {
 
     const v = value.trim();
 
-    // Si ya es ISO
+    // ISO
     if (v.includes('T')) {
         const d = new Date(v);
         return isNaN(d.getTime()) ? null : d;
@@ -91,25 +98,27 @@ export const runSeed = async () => {
             console.log('👑 Admin ya existe');
         }
 
-        // CLEAN TABLES
+        // CLEAN TABLES ONLY IN DEV
 
-        await Prediction.destroy({
-            where: {},
-            truncate: {
-                cascade: true,
-                restartIdentity: true,
-            },
-        });
+        if (!isProduction) {
+            await Prediction.destroy({
+                where: {},
+                truncate: {
+                    cascade: true,
+                    restartIdentity: true,
+                },
+            });
 
-        await Transaction.destroy({
-            where: {},
-            truncate: {
-                cascade: true,
-                restartIdentity: true,
-            },
-        });
+            await Transaction.destroy({
+                where: {},
+                truncate: {
+                    cascade: true,
+                    restartIdentity: true,
+                },
+            });
 
-        console.log('🧹 Datos limpiados');
+            console.log('🧹 Datos limpiados');
+        }
 
         // TRANSACTIONS CSV
 
@@ -124,19 +133,25 @@ export const runSeed = async () => {
         const formattedTransactions = transactions.map((t) => ({
             ...t,
             id_transaccion: t.id_transaccion?.trim() || null,
+
             edad_cliente: Number(t.edad_cliente),
+
             tenure: Number(t.tenure),
 
             importe_medio_mensual: Number(t.importe_medio_mensual),
+
             desviacion_estandar_mensual: Number(t.desviacion_estandar_mensual),
+
             media_transacciones_al_dia: Number(t.media_transacciones_al_dia),
 
             numero_fraudes_ultimo_ano: Number(t.numero_fraudes_ultimo_ano),
 
             saldo_actual: Number(t.saldo_actual),
+
             saldo_medio_30_dias: Number(t.saldo_medio_30_dias),
 
             volumen_entrante_30_dias: Number(t.volumen_entrante_30_dias),
+
             volumen_saliente_30_dias: Number(t.volumen_saliente_30_dias),
 
             numero_transferencias_recibidas_7_dias: Number(
@@ -160,6 +175,7 @@ export const runSeed = async () => {
             numero_pin_disponibles: Number(t.numero_pin_disponibles),
 
             is_night: parseBoolean(t.is_night),
+
             is_weekend: parseBoolean(t.is_weekend),
 
             dispositivo_reconocido: parseBoolean(t.dispositivo_reconocido),
@@ -171,7 +187,9 @@ export const runSeed = async () => {
             id_usuario: t.id_usuario === '' ? null : t.id_usuario,
 
             fecha_creacion_tarjeta: parseDate(t.fecha_creacion_tarjeta),
+
             fecha_hora: parseDate(t.fecha_hora),
+
             fecha_revision: parseDate(t.fecha_revision),
         }));
 
@@ -179,40 +197,63 @@ export const runSeed = async () => {
 
         console.log(`💳 Transactions insertadas: ${createdTransactions.length}`);
 
-        // PREDICTIONS CSV
+        // DEV => PREDICTIONS CSV
 
-        const predictionsPath = path.join(__dirname, '../assets/predictions.csv');
+        if (!isProduction) {
+            const predictionsPath = path.join(__dirname, '../assets/predictions.csv');
 
-        const predictions = loadCSV(predictionsPath);
+            const predictions = loadCSV(predictionsPath);
 
-        if (predictions.length === 0) {
-            throw new Error('CSV de predictions vacío');
+            if (predictions.length === 0) {
+                throw new Error('CSV de predictions vacío');
+            }
+
+            const formattedPredictions = predictions.map((p) => ({
+                ...p,
+
+                is_fraud: parseBoolean(p.is_fraud),
+
+                impacto_fraude: p.impacto_fraude,
+
+                es_transfronteriza: parseBoolean(p.es_transfronteriza),
+
+                prob_fraud: Number(p.prob_fraud),
+
+                ratio_imp_limite: Number(p.ratio_imp_limite),
+
+                intensidad_tx: Number(p.intensidad_tx),
+
+                severidad_tx: Number(p.severidad_tx),
+
+                flujo_neto_30d: Number(p.flujo_neto_30d),
+            }));
+
+            const createdPredictions = await Prediction.bulkCreate(formattedPredictions);
+
+            console.log(`🧠 Predictions CSV insertadas: ${createdPredictions.length}`);
         }
 
-        const formattedPredictions = predictions.map((p) => ({
-            ...p,
+        // PROD => ML API
 
-            is_fraud: parseBoolean(p.is_fraud),
+        if (isProduction) {
+            console.log('🧠 Solicitando predicciones al modelo ML...');
 
-            impacto_fraude: parseBoolean(p.impacto_fraude),
+            const mlPayload = formatTransactionsToML(formattedTransactions);
 
-            es_transfronteriza: parseBoolean(p.es_transfronteriza),
+            const mlResponse = await getPredictionsFromML(mlPayload);
 
-            prob_fraud: Number(p.prob_fraud),
+            const predictions = mlResponse?.predicciones;
 
-            ratio_imp_limite: Number(p.ratio_imp_limite),
+            if (!Array.isArray(predictions) || predictions.length === 0) {
+                throw new Error('La API ML no devolvió predicciones válidas');
+            }
 
-            intensidad_tx: Number(p.intensidad_tx),
+            const formattedPredictions = predictions.map(mapMLPredictionToDB);
 
-            severidad_tx: Number(p.severidad_tx),
+            const createdPredictions = await Prediction.bulkCreate(formattedPredictions);
 
-            flujo_neto_30d: Number(p.flujo_neto_30d),
-        }));
-
-        const createdPredictions = await Prediction.bulkCreate(formattedPredictions);
-
-        console.log(`🧠 Predictions insertadas: ${createdPredictions.length}`);
-
+            console.log(`🧠 Predictions ML insertadas: ${createdPredictions.length}`);
+        }
         console.log('🚀 Seed completado correctamente');
     } catch (error) {
         console.error('❌ Error seed:', error);
