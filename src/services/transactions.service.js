@@ -1,5 +1,7 @@
 import { Transaction, Prediction } from '../models/index.js';
 import { Op } from 'sequelize';
+import { getPredictionsFromML } from './ml.service.js';
+import { mapMLPredictionToDB } from '../utils/prediction.mapper.js';
 
 const parseBoolean = (value) => {
     if (value === undefined) return undefined;
@@ -168,14 +170,14 @@ export const getTransactionByIdService = async (id) => {
             'destino_alto_riesgo',
             'target_final',
             'fecha_revision',
-            'id_usuario'
-        ]
+            'id_usuario',
+        ],
     });
 
     if (!transaction) return null;
 
     const prediction = await Prediction.findOne({
-        where: { id_transaccion: id }
+        where: { id_transaccion: id },
     });
 
     const risk_score = prediction ? prediction.prob_fraud * 100 : 0;
@@ -183,14 +185,13 @@ export const getTransactionByIdService = async (id) => {
     return {
         ...transaction.toJSON(),
         prediction: prediction ? prediction.toJSON() : null,
-        risk_score
+        risk_score,
     };
 };
 
-
 export const updateTransactionByIdService = async (id, { target_final, id_usuario }) => {
     const transaction = await Transaction.findOne({
-        where: { id_transaccion: id }
+        where: { id_transaccion: id },
     });
 
     if (!transaction) return null;
@@ -203,8 +204,29 @@ export const updateTransactionByIdService = async (id, { target_final, id_usuari
     await transaction.update({
         target_final: parsedTarget,
         fecha_revision: new Date(),
-        id_usuario
+        id_usuario,
     });
 
     return transaction;
+};
+
+export const createTransactionsWithPrediction = async (transactions) => {
+    const mlResponse = await getPredictionsFromML(transactions);
+
+    const predictions = mlResponse?.predicciones;
+
+    if (!Array.isArray(predictions)) {
+        throw new Error('ML response invalid');
+    }
+
+    const createdTransactions = await Transaction.bulkCreate(transactions);
+
+    const formattedPredictions = predictions.map(mapMLPredictionToDB);
+
+    const createdPredictions = await Prediction.bulkCreate(formattedPredictions);
+
+    return {
+        transactions: createdTransactions,
+        predictions: createdPredictions,
+    };
 };

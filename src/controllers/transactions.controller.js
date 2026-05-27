@@ -1,16 +1,13 @@
-import { getTransactionsService, getTransactionByIdService, updateTransactionByIdService } from '../services/transactions.service.js';
+import {
+    getTransactionsService,
+    getTransactionByIdService,
+    updateTransactionByIdService,
+    createTransactionsWithPrediction,
+} from '../services/transactions.service.js';
 
 export const getTransactions = async (req, res) => {
     try {
-        const {
-            page = 1,
-            limit = 20,
-            id_usuario,
-            target_final,
-            riskLevel,
-            from,
-            to
-        } = req.query;
+        const { page = 1, limit = 20, id_usuario, target_final, riskLevel, from, to } = req.query;
 
         const data = await getTransactionsService({
             page: Number(page),
@@ -19,18 +16,17 @@ export const getTransactions = async (req, res) => {
             target_final,
             riskLevel,
             from,
-            to
+            to,
         });
 
         res.json(data);
     } catch (error) {
         console.error(error);
         res.status(500).json({
-            message: 'Error fetching transactions'
+            message: 'Error fetching transactions',
         });
     }
 };
-
 
 export const getTransactionByIdController = async (req, res) => {
     const { id } = req.params;
@@ -44,14 +40,13 @@ export const getTransactionByIdController = async (req, res) => {
     res.json(data);
 };
 
-
 export const updateTransactionByIdController = async (req, res) => {
     const { id } = req.params;
     const { target_final, id_usuario } = req.body;
 
     const updated = await updateTransactionByIdService(id, {
         target_final,
-        id_usuario
+        id_usuario,
     });
 
     if (!updated) {
@@ -59,4 +54,22 @@ export const updateTransactionByIdController = async (req, res) => {
     }
 
     res.json(updated);
+};
+
+export const createTransactions = async (req, res) => {
+    try {
+        const result = await createTransactionsWithPrediction(req.body);
+
+        return res.status(201).json({
+            message: 'Transactions processed with predictions',
+            data: result,
+        });
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+            message: 'Error processing transactions',
+            error: error.message,
+        });
+    }
 };

@@ -20,7 +20,7 @@ const Prediction = sequelize.define(
         },
 
         impacto_fraude: {
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.INTEGER,
         },
 
         es_transfronteriza: {
