@@ -9,6 +9,7 @@ import clientsRoutes from './routes/clients.routes.js';
 import transactionsRoutes from './routes/transactions.routes.js';
 
 const app = express();
+app.set('trust proxy', 1);
 app.use(helmet());
 app.use(
     cors({
